@@ -1,53 +1,37 @@
-class Particle {
-  constructor(x, y, hu, firework) {
-    this.pos = createVector(x, y);
-    this.firework = firework;
-    this.lifespan = 255;
-    this.hu = hu;
-    this.acc = createVector(random(-2,2), 0);
-    if (this.firework) {
-      this.vel = createVector(0, random(-12, -8));
-    } else {
-      this.vel = p5.Vector.random2D();
-      this.vel.mult(random(2, 20));
-    }
-  }
+const G = -0.3;
+const K = -0.01;
 
-  applyForce(force) {
-    this.acc.add(force);
+class Particle {
+  constructor(mass, pos, color, vel) {
+    this.mass = mass;
+    this.pos = pos;
+    this.color = color;
+    this.vel = vel;
+    this.lifespan = 255;
   }
 
   update() {
-    if (!this.firework) {
-      this.vel.mult(random(0.6, 1.2));
-      this.lifespan -= 4;
-      //slow down explosion
-      this.vel.sub(this.acc*(random(1,2)));
-    }
-    this.vel.add(this.acc);
+    let resistance = p5.Vector.normalize(this.vel);
+    resistance.mult(K * this.vel.mag() * this.vel.mag());
+    let acc = p5.Vector.div(resistance, this.mass);
+    acc.add(new p5.Vector(0, G));
+    this.vel.add(acc);
     this.pos.add(this.vel);
-    this.acc.mult(0);
+    this.lifespan -= 1;
   }
 
   done() {
-    if (this.lifespan < 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.lifespan < 0;
+  }
+
+  explosion() {
+    return [];
   }
 
   show() {
     colorMode(HSB);
-
-    if (!this.firework) {
-      strokeWeight(2);
-      stroke(this.hu, 255, 255, this.lifespan);
-    } else {
-      strokeWeight(4);
-      stroke(this.hu, 255, 255);
-    }
-
-    point(this.pos.x, this.pos.y);
+    strokeWeight(this.mass);
+    stroke(this.color, 255, 255, this.lifespan);
+    point(this.pos.x, height - this.pos.y);
   }
 }
