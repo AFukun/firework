@@ -1,12 +1,13 @@
 let particles = [];
-let camSpeed = 1;
+let camSpeed = 3;
 let cam;
-let fov = 45;
+let fov = 60;
+
 
 function mouseWheel(event) {
     fov -= event.delta * 0.01;
     fov = max(10, fov);
-    fov = min(45, fov);
+    fov = min(60, fov);
 }
 
 function setup() {
@@ -22,11 +23,12 @@ function setup() {
 
 function draw() {
     colorMode(RGB);
-    background(0, 0, 0);
+    blendMode(BLEND);
+    background(0, 0, 0, 25);
 
     perspective(fov);
     cameraMove();
-    box();
+    axes(width / 2);
 
     if (random(1000) < 15) {
         particles.push(new Firework());
@@ -50,7 +52,7 @@ function startStop() {
     button.parent(div);
     button2.parent(div);
     div.center("horizontal");
-    // noLoop();
+    noLoop();
 
     button.mousePressed(loop);
     button2.mousePressed(noLoop);
@@ -71,4 +73,30 @@ function cameraMove() {
     if (keyIsDown(83)) {  // Use key'S'to make a backward move
         cam.move(0, 0, camSpeed);
     }
+}
+
+
+function axes(length) {
+    const LL = length * 0.95;
+    const SL = length * 0.05;
+
+    push();
+    // x 軸
+    stroke(255, 0, 0);
+    line(0, 0, length, 0);
+    line(length, 0, LL, SL);
+    line(length, 0, LL, -SL);
+
+    // y 軸
+    stroke(0, 255, 0);
+    line(0, 0, 0, length);
+    line(0, length, SL, LL);
+    line(0, length, -SL, LL);
+
+    // z 軸
+    stroke(0, 0, 255);
+    line(0, 0, 0, 0, 0, length);
+    line(0, 0, length, SL, 0, LL);
+    line(0, 0, length, -SL, 0, LL);
+    pop();
 }
