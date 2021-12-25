@@ -1,8 +1,19 @@
 # Firework
 
-## Local Develop
+## Local Test
 
 Just open [index.html](./index.html) in your browser.
+
+## Development
+
+Always open new branch before adding new feature.
+
+```shell
+$ git checkout -b [new branch name]
+```
+
+Create merge request on [Pull Requests Page](https://github.com/AFukun/firework/pulls).
+
 
 ## Reference
 
