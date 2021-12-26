@@ -2,7 +2,7 @@ class Firework extends Particle {
   constructor() {
     super(
       random(9, 11),
-      new p5.Vector(random(0, 100), random(50, 100), random(0, 100)),
+      new p5.Vector(random(0, 100), random(0, 100), random(0, 100)),
       random(360),
       new p5.Vector(random(-3, 3), random(20, 30), random(-3, 3))
     );
