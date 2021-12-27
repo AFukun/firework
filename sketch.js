@@ -8,7 +8,7 @@ function setup() {
   angleMode(DEGREES);
   background(0);
   noStroke();
-  camera = new Camera(50, -250, 600);
+  camera = new Camera(50, -100, 600);
   drawingContext.shadowBlur = 10;
 }
 
@@ -62,13 +62,13 @@ function drawAxes(length) {
   const SL = length * 0.05;
 
   colorMode(RGB);
+  strokeWeight(4);
 
   // x
   stroke(255, 0, 0);
   line(0, 0, length, 0);
   line(length, 0, LL, SL);
   line(length, 0, LL, -SL);
-
 
   // y
   stroke(0, 255, 0);
@@ -81,6 +81,6 @@ function drawAxes(length) {
   line(0, 0, 0, 0, 0, length);
   line(0, 0, length, SL, 0, LL);
   line(0, 0, length, -SL, 0, LL);
-  
+
   noStroke();
 }
