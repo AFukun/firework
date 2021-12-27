@@ -1,6 +1,14 @@
 const G = -0.4;
 const K = -0.03;
 
+function writeColor(image, x, y, red, green, blue, alpha) {
+  let index = (x + y * width) * 4;
+  image.pixels[index] = red;
+  image.pixels[index + 1] = green;
+  image.pixels[index + 2] = blue;
+  image.pixels[index + 3] = alpha;
+}
+
 class Particle {
   constructor(mass, pos, color, vel) {
     this.mass = mass;
@@ -30,8 +38,12 @@ class Particle {
 
   show() {
     colorMode(HSB);
-    strokeWeight(this.mass);
-    stroke(this.color, 255, 255, this.lifespan);
-    point(this.pos.x, -this.pos.y, this.pos.z);
+    pointLight(this.color, 255, this.lifespan, this.pos.x, -this.pos.y, this.pos.z);
+
+    push();
+    translate(this.pos.x, -this.pos.y, this.pos.z);
+    emissiveMaterial(this.color, 255, this.lifespan);
+    sphere(this.mass / 2);
+    pop();
   }
 }

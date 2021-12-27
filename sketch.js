@@ -6,10 +6,10 @@ function setup() {
   startStop();
   colorMode(HSB);
   angleMode(DEGREES);
-  stroke(255);
-  strokeWeight(4);
   background(0);
-  camera = new Camera(50, -250, 600);
+  noStroke();
+  camera = new Camera(50, -100, 600);
+  drawingContext.shadowBlur = 10;
 }
 
 function draw() {
@@ -18,6 +18,8 @@ function draw() {
 
   camera.update();
   drawAxes(width / 2);
+  noLights();
+  ambientLight(128);
 
   if (random(1000) < 15) {
     particles.push(new Firework());
@@ -31,6 +33,7 @@ function draw() {
       particles.splice(i, 1);
     }
   }
+  sphere(100);
 }
 
 function startStop() {
@@ -41,6 +44,7 @@ function startStop() {
   button.parent(div);
   button2.parent(div);
   div.center("horizontal");
+
   // noLoop();
 
   button.mousePressed(loop);
@@ -58,6 +62,7 @@ function drawAxes(length) {
   const SL = length * 0.05;
 
   colorMode(RGB);
+  strokeWeight(4);
 
   // x
   stroke(255, 0, 0);
@@ -76,4 +81,6 @@ function drawAxes(length) {
   line(0, 0, 0, 0, 0, length);
   line(0, 0, length, SL, 0, LL);
   line(0, 0, length, -SL, 0, LL);
+
+  noStroke();
 }
