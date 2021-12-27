@@ -1,5 +1,5 @@
-const G = -0.3;
-const K = -0.0;  // -0.01
+const G = -0.4;
+const K = -0.03; // -0.01
 
 class Particle {
   constructor(mass, pos, color, vel) {
@@ -17,7 +17,7 @@ class Particle {
     acc.add(new p5.Vector(0, G, 0));
     this.vel.add(acc);
     this.pos.add(this.vel);
-    this.lifespan -= 1;
+    this.lifespan -= 8;
   }
 
   done() {
