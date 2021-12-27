@@ -1,5 +1,5 @@
 const G = -0.4;
-const K = -0.03; // -0.01
+const K = -0.03;
 
 class Particle {
   constructor(mass, pos, color, vel) {

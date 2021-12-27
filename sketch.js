@@ -13,12 +13,11 @@ function setup() {
 }
 
 function draw() {
-  colorMode(RGB);
-  blendMode(BLEND);
-  background(0, 0, 0, 25);
+  colorMode(HSB);
+  background(0);
 
-  drawAxes(width / 2);
   camera.update();
+  drawAxes(width / 2);
 
   if (random(1000) < 15) {
     particles.push(new Firework());
@@ -57,6 +56,8 @@ function mouseWheel(event) {
 function drawAxes(length) {
   const LL = length * 0.95;
   const SL = length * 0.05;
+
+  colorMode(RGB);
 
   // x
   stroke(255, 0, 0);
