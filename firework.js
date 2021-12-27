@@ -1,10 +1,10 @@
 class Firework extends Particle {
   constructor() {
     super(
-      random(9, 11),
-      new p5.Vector(random(-100, 100), random(-100, 100), random(-100, 100)),
-      random(360),
-      new p5.Vector(random(-3, 3), 40, random(-3, 3))
+      random(6, 7),
+      new p5.Vector(random(width / 4, (3 * width) / 4), 0),
+      random(120),
+      new p5.Vector(random(-10, 10), random(70, 80))
     );
     this.lifespan = 32767;
   }
@@ -15,14 +15,14 @@ class Firework extends Particle {
 
   explosion() {
     let particles = [];
-    let amount = random(30, 40);
+    let amount = random(100, 200);
     for (let i = 0; i < amount; i++) {
       particles.push(
         new Particle(
-          random(3, 4),
-          new p5.Vector(this.pos.x, this.pos.y, this.pos.z),
+          random(2, 3),
+          new p5.Vector(this.pos.x, this.pos.y),
           this.color,
-          new p5.Vector(random(-5, 5), random(-5, 5), random(-5, 5))
+          new p5.Vector(random(-20, 20), random(-20, 20))
         )
       );
     }
