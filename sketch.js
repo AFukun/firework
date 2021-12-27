@@ -1,7 +1,16 @@
 let particles = [];
 let camera;
+let images = [];
+let skybox;
+
 
 function setup() {
+  images.push(loadImage('assets/skybox/back.jpg'));
+  images.push(loadImage('assets/floor6_d.png'));
+  images.push(loadImage('assets/skybox/front.jpg'));
+  images.push(loadImage('assets/skybox/left.jpg'));
+  images.push(loadImage('assets/skybox/right.jpg'));
+  images.push(loadImage('assets/skybox/top.jpg'));
   createCanvas(1280, 720, WEBGL);
   startStop();
   colorMode(HSB);
@@ -9,6 +18,7 @@ function setup() {
   background(0);
   noStroke();
   camera = new Camera(50, -100, 600);
+  skybox = new skyBox(images, width);
   drawingContext.shadowBlur = 10;
 }
 
@@ -30,13 +40,8 @@ function draw() {
       particles.splice(i, 1);
     }
   }
-  push();
-  translate(0, width / 2, 0);
-  ambientLight(60);
-  specularMaterial(10);
-  shininess(50);
-  box(width);
-  pop();
+  ambientLight(50);
+  skybox.draw();
 }
 
 function startStop() {
@@ -55,7 +60,7 @@ function startStop() {
 }
 
 function mouseWheel(event) {
-  camera.fov -= event.delta * 0.01;
+  camera.fov -= event.delta * 0.003;
   camera.fov = max(60, camera.fov);
-  camera.fov = min(100, camera.fov);
+  camera.fov = min(80, camera.fov);
 }

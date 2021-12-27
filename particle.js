@@ -25,11 +25,12 @@ class Particle {
     acc.add(new p5.Vector(0, G, 0));
     this.vel.add(acc);
     this.pos.add(this.vel);
-    this.lifespan -= 8;
+    this.lifespan -= 2;
+    this.mass *= 0.99;
   }
 
   done() {
-    return this.lifespan < 0;
+    return this.lifespan < 50 || this.mass < 0;
   }
 
   explosion() {
@@ -38,11 +39,11 @@ class Particle {
 
   show() {
     colorMode(HSB);
-    pointLight(this.color, 255, this.lifespan, this.pos.x, -this.pos.y, this.pos.z);
-
+    pointLight(this.color, 255, this.lifespan * this.mass, this.pos.x, -this.pos.y, this.pos.z);
+    lightFalloff(1, 0.01, 0.00001);
     push();
     translate(this.pos.x, -this.pos.y, this.pos.z);
-    emissiveMaterial(this.color, 255, this.lifespan);
+    emissiveMaterial(this.color, 255, this.lifespan * this.mass);
     sphere(this.mass / 2);
     pop();
   }
