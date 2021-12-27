@@ -1,5 +1,13 @@
 let particles = [];
 let camera;
+let whistle;
+let boomSound;
+let backgroundSound;
+
+function preload() {
+  backgroundSound = loadSound("assets/whistle.mp3");
+  boomSound = loadSound("assets/boom.mp3");
+}
 
 function setup() {
   createCanvas(1280, 720, WEBGL);
@@ -29,7 +37,11 @@ function draw() {
     particles[i].update();
     particles[i].show();
     if (particles[i].done()) {
-      particles.push(...particles[i].explosion());
+      let newParticles = particles[i].explosion();
+      if (newParticles.length != 0) {
+        particles.push(...newParticles);
+        boomSound.play();
+      }
       particles.splice(i, 1);
     }
   }
@@ -45,10 +57,16 @@ function startStop() {
   button2.parent(div);
   div.center("horizontal");
 
-  // noLoop();
+  noLoop();
 
-  button.mousePressed(loop);
-  button2.mousePressed(noLoop);
+  button.mousePressed(function () {
+    loop();
+    backgroundSound.loop();
+  });
+  button2.mousePressed(function () {
+    noLoop();
+    backgroundSound.stop();
+  });
 }
 
 function mouseWheel(event) {
