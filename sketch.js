@@ -17,9 +17,6 @@ function draw() {
   background(0);
 
   camera.update();
-  drawAxes(width / 2);
-  noLights();
-  ambientLight(128);
 
   if (random(1000) < 15) {
     particles.push(new Firework());
@@ -33,7 +30,13 @@ function draw() {
       particles.splice(i, 1);
     }
   }
-  sphere(100);
+  push();
+  translate(0, width / 2, 0);
+  ambientLight(60);
+  specularMaterial(10);
+  shininess(50);
+  box(width);
+  pop();
 }
 
 function startStop() {
@@ -55,32 +58,4 @@ function mouseWheel(event) {
   camera.fov -= event.delta * 0.01;
   camera.fov = max(60, camera.fov);
   camera.fov = min(100, camera.fov);
-}
-
-function drawAxes(length) {
-  const LL = length * 0.95;
-  const SL = length * 0.05;
-
-  colorMode(RGB);
-  strokeWeight(4);
-
-  // x
-  stroke(255, 0, 0);
-  line(0, 0, length, 0);
-  line(length, 0, LL, SL);
-  line(length, 0, LL, -SL);
-
-  // y
-  stroke(0, 255, 0);
-  line(0, 0, 0, length);
-  line(0, length, SL, LL);
-  line(0, length, -SL, LL);
-
-  // z
-  stroke(0, 0, 255);
-  line(0, 0, 0, 0, 0, length);
-  line(0, 0, length, SL, 0, LL);
-  line(0, 0, length, -SL, 0, LL);
-
-  noStroke();
 }
