@@ -1,5 +1,5 @@
-const G = -0.3;
-const K = -0.0;  // -0.01
+const G = -0.4;
+const K = -0.03;
 
 function writeColor(image, x, y, red, green, blue, alpha) {
   let index = (x + y * width) * 4;
@@ -25,7 +25,7 @@ class Particle {
     acc.add(new p5.Vector(0, G, 0));
     this.vel.add(acc);
     this.pos.add(this.vel);
-    this.lifespan -= 2;
+    this.lifespan -= 8;
   }
 
   done() {
