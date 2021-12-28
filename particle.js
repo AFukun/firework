@@ -30,7 +30,7 @@ class Particle {
   }
 
   done() {
-    return this.lifespan < 50 || this.mass < 0;
+    return this.lifespan < 50 || this.mass < 0 || this.y < 0;
   }
 
   explosion() {
@@ -40,7 +40,7 @@ class Particle {
   show() {
     colorMode(HSB);
     pointLight(this.color, 255, this.lifespan * this.mass, this.pos.x, -this.pos.y, this.pos.z);
-    lightFalloff(1, 0.01, 0.00003);
+    lightFalloff(1, 0.01, 0.00004);
     push();
     translate(this.pos.x, -this.pos.y, this.pos.z);
     emissiveMaterial(this.color, 255, this.lifespan * this.mass);

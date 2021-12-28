@@ -2,9 +2,9 @@ class Firework extends Particle {
   constructor() {
     super(
       random(6, 8),
-      new p5.Vector(random(-100, 100), random(150, 200), random(-100, 100)),
+      new p5.Vector(random(-100, 100), random(180, 200), random(-100, 100)),
       random(360),
-      new p5.Vector(random(-3, 3), random(145, 150), random(-3, 3))
+      new p5.Vector(random(-3, 3), random(148, 150), random(-3, 3))
     );
     this.lifespan = 32767;
   }

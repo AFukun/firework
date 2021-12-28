@@ -3,14 +3,22 @@ let camera;
 let images = [];
 let skybox;
 
+let whistle;
+let boomSound;
+let backgroundSound;
 
-function setup() {
+function preload() {
+  backgroundSound = loadSound("assets/whistle.mp3");
+  boomSound = loadSound("assets/boom.mp3");
   images.push(loadImage('assets/skybox/back.jpg'));
   images.push(loadImage('assets/floor6_d.png'));
   images.push(loadImage('assets/skybox/front.jpg'));
   images.push(loadImage('assets/skybox/left.jpg'));
   images.push(loadImage('assets/skybox/right.jpg'));
   images.push(loadImage('assets/skybox/top.jpg'));
+}
+
+function setup() {
   createCanvas(1280, 720, WEBGL);
   startStop();
   colorMode(HSB);
@@ -36,7 +44,11 @@ function draw() {
     particles[i].update();
     particles[i].show();
     if (particles[i].done()) {
-      particles.push(...particles[i].explosion());
+      let newParticles = particles[i].explosion();
+      if (newParticles.length != 0) {
+        particles.push(...newParticles);
+        boomSound.play();
+      }
       particles.splice(i, 1);
     }
   }
@@ -53,10 +65,16 @@ function startStop() {
   button2.parent(div);
   div.center("horizontal");
 
-  // noLoop();
+  noLoop();
 
-  button.mousePressed(loop);
-  button2.mousePressed(noLoop);
+  button.mousePressed(function () {
+    loop();
+    // backgroundSound.loop();
+  });
+  button2.mousePressed(function () {
+    noLoop();
+    // backgroundSound.stop();
+  });
 }
 
 function mouseWheel(event) {
