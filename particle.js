@@ -26,7 +26,7 @@ class Particle {
     this.vel.add(acc);
     this.pos.add(this.vel);
     this.lifespan -= 2;
-    this.mass *= 0.99;
+    this.mass *= 0.98;
   }
 
   done() {
@@ -40,7 +40,7 @@ class Particle {
   show() {
     colorMode(HSB);
     pointLight(this.color, 255, this.lifespan * this.mass, this.pos.x, -this.pos.y, this.pos.z);
-    lightFalloff(1, 0.01, 0.00001);
+    lightFalloff(1, 0.01, 0.00003);
     push();
     translate(this.pos.x, -this.pos.y, this.pos.z);
     emissiveMaterial(this.color, 255, this.lifespan * this.mass);
