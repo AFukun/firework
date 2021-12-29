@@ -21,9 +21,14 @@ function setup() {
   pass1 = createGraphics(windowWidth, windowHeight, WEBGL);
   pass2 = createGraphics(windowWidth, windowHeight, WEBGL);
   bloomPass = createGraphics(windowWidth, windowHeight, WEBGL);
+
   pass1.noStroke();
   pass2.noStroke();
   bloomPass.noStroke();
+
+  pass1.shader(blurH);
+  pass2.shader(blurV);
+  bloomPass.shader(bloom);
 }
 
 function draw() {
@@ -54,25 +59,19 @@ function draw() {
 
 function postProcess() {
   img = get();
-  pass1.shader(blurH);
-  pass2.shader(blurV);
-  bloomPass.shader(bloom);
 
   blurH.setUniform("tex0", img);
   blurH.setUniform("texelSize", [1.0 / width, 1.0 / height]);
   blurH.setUniform("direction", [1.0, 0.0]);
-
   pass1.rect(0, 0, width, height);
 
   blurV.setUniform("tex0", pass1);
   blurV.setUniform("texelSize", [1.0 / width, 1.0 / height]);
   blurV.setUniform("direction", [0.0, 1.0]);
-
   pass2.rect(0, 0, width, height);
 
   bloom.setUniform("tex0", img);
   bloom.setUniform("tex1", pass2);
-
   bloomPass.rect(0, 0, width, height);
 
   background(0);
