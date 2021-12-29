@@ -1,3 +1,6 @@
+const minExplosionSpeed = 0;
+const maxExplosionSpeed = 40;
+
 class Firework extends Particle {
   constructor() {
     super(
@@ -15,16 +18,16 @@ class Firework extends Particle {
 
   explosion() {
     let particles = [];
-    let amount = random(100, 200);
+    let amount = random(150, 200);
     for (let i = 0; i < amount; i++) {
-      particles.push(
-        new Particle(
-          random(2, 3),
-          new p5.Vector(this.pos.x, this.pos.y),
-          this.color,
-          new p5.Vector(random(-20, 20), random(-20, 20))
-        )
+      let newParticle = new Particle(
+        random(2, 3),
+        new p5.Vector(this.pos.x, this.pos.y),
+        this.color,
+        p5.Vector.random2D()
       );
+      newParticle.vel.mult(random(minExplosionSpeed, maxExplosionSpeed));
+      particles.push(newParticle);
     }
     return particles;
   }

@@ -17,7 +17,7 @@ class Particle {
     acc.add(new p5.Vector(0, G));
     this.vel.add(acc);
     this.pos.add(this.vel);
-    this.lifespan -= 2;
+    this.lifespan -= 8;
   }
 
   done() {

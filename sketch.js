@@ -1,4 +1,7 @@
 let particles = [];
+let fireworkCount = 0;
+const maxFireworkCount = 10;
+let doPostProcess;
 let img;
 let blurH, blurV, bloom;
 let pass1, pass2, bloomPass;
@@ -11,7 +14,7 @@ function preload() {
 
 function setup() {
   createCanvas(1280, 720);
-  startStop();
+  createButtons();
   colorMode(HSB);
   background(0);
   img = createImage(1280, 720);
@@ -27,26 +30,30 @@ function draw() {
   colorMode(HSB);
   background(0);
 
-  if (particles.length < 1) {
+  if (random(1000) < 30 && fireworkCount < maxFireworkCount) {
     particles.push(new Firework());
+    fireworkCount++;
   }
 
   for (let i = 0; i < particles.length; i++) {
     particles[i].update();
     particles[i].show();
     if (particles[i].done()) {
-      particles.push(...particles[i].explosion());
+      let newParticles = particles[i].explosion();
+      if (newParticles.length > 0) {
+        particles.push(...particles[i].explosion());
+        fireworkCount--;
+      }
       particles.splice(i, 1);
     }
   }
-  // stroke(133, 255, 255);
-  // strokeWeight(200);
-  // point(width / 2, height / 2);
-  img = get();
-  postProcess(img);
+  if (doPostProcess) {
+    postProcess();
+  }
 }
 
-function postProcess(img) {
+function postProcess() {
+  img = get();
   pass1.shader(blurH);
   pass2.shader(blurV);
   bloomPass.shader(bloom);
@@ -72,17 +79,23 @@ function postProcess(img) {
   image(bloomPass, 0, 0, width, height);
 }
 
-function startStop() {
+function createButtons() {
   let div = createDiv();
   let button = createButton("start");
   let button2 = createButton("stop");
+  let button3 = createButton("bloom");
+  doPostProcess = false;
 
   button.parent(div);
   button2.parent(div);
+  button3.parent(div);
   div.center("horizontal");
 
   // noLoop();
 
   button.mousePressed(loop);
   button2.mousePressed(noLoop);
+  button3.mousePressed(function () {
+    doPostProcess = !doPostProcess;
+  });
 }

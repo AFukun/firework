@@ -14,7 +14,7 @@ void main() {
 
   float Y = 0.2126 * img.x + 0.7152 * img.y + 0.0722 * img.z;
 
-  if (Y < 0.3) {
+  if (Y < 0.1) {
     gl_FragColor = blur;
   } else {
     gl_FragColor = img;
