@@ -1,15 +1,13 @@
-let particles = [];
-let fireworkCount = 0;
-const maxFireworkCount = 10;
-let doPostProcess;
+let state;
 let img;
-let blurH, blurV, bloom;
-let pass1, pass2, bloomPass;
+let blurH, blurV, bloom, blend;
+let pass1, pass2, bloomPass, blendPass;
 
 function preload() {
   blurH = loadShader("base.vert", "blur.frag");
   blurV = loadShader("base.vert", "blur.frag");
   bloom = loadShader("base.vert", "bloom.frag");
+  blend = loadShader("base.vert", "blend.frag");
 }
 
 function setup() {
@@ -21,43 +19,40 @@ function setup() {
   pass1 = createGraphics(windowWidth, windowHeight, WEBGL);
   pass2 = createGraphics(windowWidth, windowHeight, WEBGL);
   bloomPass = createGraphics(windowWidth, windowHeight, WEBGL);
+  blendPass = createGraphics(windowWidth, windowHeight, WEBGL);
+
   pass1.noStroke();
   pass2.noStroke();
   bloomPass.noStroke();
+  blendPass.noStroke();
+
+  pass1.shader(blurH);
+  pass2.shader(blurV);
+  bloomPass.shader(bloom);
+  blendPass.shader(blend);
 }
 
 function draw() {
   colorMode(HSB);
   background(0);
 
-  if (random(1000) < 30 && fireworkCount < maxFireworkCount) {
-    particles.push(new Firework());
-    fireworkCount++;
-  }
+  stroke(128, 255, 255);
+  strokeWeight(300);
+  point(width / 2, height / 2);
 
-  for (let i = 0; i < particles.length; i++) {
-    particles[i].update();
-    particles[i].show();
-    if (particles[i].done()) {
-      let newParticles = particles[i].explosion();
-      if (newParticles.length > 0) {
-        particles.push(...particles[i].explosion());
-        fireworkCount--;
-      }
-      particles.splice(i, 1);
+  if (state > 0) {
+    doBlur();
+    if (state == 2) {
+      doBloom();
     }
-  }
-  if (doPostProcess) {
-    postProcess();
+    if (state == 3) {
+      doBlend();
+    }
   }
 }
 
-function postProcess() {
+function doBlur() {
   img = get();
-  pass1.shader(blurH);
-  pass2.shader(blurV);
-  bloomPass.shader(bloom);
-
   blurH.setUniform("tex0", img);
   blurH.setUniform("texelSize", [1.0 / width, 1.0 / height]);
   blurH.setUniform("direction", [1.0, 0.0]);
@@ -69,7 +64,11 @@ function postProcess() {
   blurV.setUniform("direction", [0.0, 1.0]);
 
   pass2.rect(0, 0, width, height);
+  background(0);
+  image(pass2, 0, 0, width, height);
+}
 
+function doBloom() {
   bloom.setUniform("tex0", img);
   bloom.setUniform("tex1", pass2);
 
@@ -79,23 +78,40 @@ function postProcess() {
   image(bloomPass, 0, 0, width, height);
 }
 
+function doBlend() {
+  blend.setUniform("tex0", img);
+  blend.setUniform("tex1", pass2);
+
+  blendPass.rect(0, 0, width, height);
+
+  background(0);
+  image(blendPass, 0, 0, width, height);
+}
+
 function createButtons() {
   let div = createDiv();
-  let button = createButton("start");
-  let button2 = createButton("stop");
-  let button3 = createButton("bloom");
-  doPostProcess = false;
+  let button0 = createButton("normal");
+  let button1 = createButton("blur");
+  let button2 = createButton("bloom");
+  let button3 = createButton("blend");
+  state = 0;
 
-  button.parent(div);
+  button0.parent(div);
+  button1.parent(div);
   button2.parent(div);
   button3.parent(div);
   div.center("horizontal");
 
-  // noLoop();
-
-  button.mousePressed(loop);
-  button2.mousePressed(noLoop);
+  button0.mousePressed(function () {
+    state = 0;
+  });
+  button1.mousePressed(function () {
+    state = 1;
+  });
+  button2.mousePressed(function () {
+    state = 2;
+  });
   button3.mousePressed(function () {
-    doPostProcess = !doPostProcess;
+    state = 3;
   });
 }
