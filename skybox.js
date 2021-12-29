@@ -10,7 +10,11 @@ class skyBox {
     textureMode(NORMAL);
     textureWrap(MIRROR, MIRROR);
     push();
-    translate(-w / 2, h, -w / 2);
+    translate(
+      -w / 2 + camera.cam.eyeX,
+      h + h / 4 + camera.cam.eyeY,
+      -w / 2 + camera.cam.eyeZ
+    );
     // back
     beginShape();
     texture(this.images[0]);

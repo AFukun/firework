@@ -43,7 +43,7 @@ class Particle {
     push();
     translate(this.pos.x, -this.pos.y, this.pos.z);
     emissiveMaterial(this.color, 255, this.lifespan);
-    sphere(this.mass / 3.0);
+    sphere(this.mass / 2.0);
     pop();
   }
 }

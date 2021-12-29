@@ -60,7 +60,7 @@ function createButtons() {
 }
 
 function updateParticles() {
-  if (random(1000) < 15 && fireworkCount < maxFireworkCount) {
+  if (random(1000) < 30 && fireworkCount < maxFireworkCount) {
     particles.push(new Firework());
     fireworkCount++;
   }

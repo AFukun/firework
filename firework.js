@@ -1,10 +1,10 @@
-const explosionSpeedMin = 4;
-const explosionSpeedMax = 6;
-const fireworkSpeed = 30;
-const explosionAmount = 40;
+const explosionSpeedMin = 0;
+const explosionSpeedMax = 8;
+const fireworkSpeed = 40;
+const explosionAmount = 100;
 const fireworkWeight = 10;
 const particleWeight = 4;
-const maxFireworkCount = 3;
+const maxFireworkCount = 10;
 
 class Firework extends Particle {
   constructor() {
