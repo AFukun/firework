@@ -1,13 +1,6 @@
-const G = -0.4;
-const K = -0.03;
-
-function writeColor(image, x, y, red, green, blue, alpha) {
-  let index = (x + y * width) * 4;
-  image.pixels[index] = red;
-  image.pixels[index + 1] = green;
-  image.pixels[index + 2] = blue;
-  image.pixels[index + 3] = alpha;
-}
+const G = -0.22;
+const K = -0.01;
+const lifespanCost = 8;
 
 class Particle {
   constructor(mass, pos, color, vel) {
@@ -25,12 +18,11 @@ class Particle {
     acc.add(new p5.Vector(0, G, 0));
     this.vel.add(acc);
     this.pos.add(this.vel);
-    this.lifespan -= 2;
-    this.mass *= 0.98;
+    this.lifespan -= lifespanCost;
   }
 
   done() {
-    return this.lifespan < 50 || this.mass < 0 || this.y < 0;
+    return this.lifespan < 50;
   }
 
   explosion() {
@@ -38,13 +30,20 @@ class Particle {
   }
 
   show() {
-    colorMode(HSB);
-    pointLight(this.color, 255, this.lifespan * this.mass, this.pos.x, -this.pos.y, this.pos.z);
-    lightFalloff(1, 0.01, 0.00004);
+    if (this.lifespan > 100) {
+      pointLight(
+        this.color,
+        255,
+        this.lifespan,
+        this.pos.x,
+        -this.pos.y,
+        this.pos.z
+      );
+    }
     push();
     translate(this.pos.x, -this.pos.y, this.pos.z);
-    emissiveMaterial(this.color, 255, this.lifespan * this.mass);
-    sphere(this.mass / 2);
+    emissiveMaterial(this.color, 255, this.lifespan);
+    sphere(this.mass / 3.0);
     pop();
   }
 }

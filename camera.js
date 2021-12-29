@@ -1,14 +1,14 @@
 const camSpeed = 2;
 
 class Camera {
-  constructor(x, y, z) {
+  constructor(x, y, z, cX, cY, cZ, uX, uY, uZ) {
     this.cam = createCamera();
-    this.cam.setPosition(x, y, z);
+    this.cam.camera(x, y, z, cX, cY, cZ, uX, uY, uZ);
     this.fov = 60;
   }
 
   update() {
-    perspective(this.fov, width/height, 0.1, 5000);
+    perspective(this.fov, width / height, 0.1, 5000);
     // Drag mouse to change the view angle
     orbitControl();
     if (keyIsDown(65)) {
@@ -35,5 +35,16 @@ class Camera {
       // Use key'Space'to make a downward move
       this.cam.move(0, -camSpeed, 0);
     }
+    // console.log(
+    //   this.cam.eyeX,
+    //   this.cam.eyeY,
+    //   this.cam.eyeZ,
+    //   this.cam.centerX,
+    //   this.cam.centerY,
+    //   this.cam.centerZ,
+    //   this.cam.upX,
+    //   this.cam.upY,
+    //   this.cam.upZ
+    // );
   }
 }

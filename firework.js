@@ -1,10 +1,18 @@
+const explosionSpeedMin = 4;
+const explosionSpeedMax = 6;
+const fireworkSpeed = 30;
+const explosionAmount = 40;
+const fireworkWeight = 10;
+const particleWeight = 4;
+const maxFireworkCount = 3;
+
 class Firework extends Particle {
   constructor() {
     super(
-      random(6, 8),
-      new p5.Vector(random(-100, 100), random(180, 200), random(-100, 100)),
+      fireworkWeight,
+      new p5.Vector(random(-500, 500), 0, random(-100, 100)),
       random(360),
-      new p5.Vector(random(-3, 3), random(148, 150), random(-3, 3))
+      new p5.Vector(0, fireworkSpeed, 0)
     );
     this.lifespan = 32767;
   }
@@ -15,16 +23,15 @@ class Firework extends Particle {
 
   explosion() {
     let particles = [];
-    let amount = random(50, 60);
-    for (let i = 0; i < amount; i++) {
-      particles.push(
-        new Particle(
-          random(2, 3),
-          new p5.Vector(this.pos.x, this.pos.y, this.pos.z),
-          this.color,
-          new p5.Vector(random(-30, 30), random(-5, 30), random(-30, 30))
-        )
+    for (let i = 0; i < explosionAmount; i++) {
+      let newParticle = new Particle(
+        particleWeight,
+        new p5.Vector(this.pos.x, this.pos.y, this.pos.z),
+        this.color,
+        p5.Vector.random3D()
       );
+      newParticle.vel.mult(random(explosionSpeedMin, explosionSpeedMax));
+      particles.push(newParticle);
     }
     return particles;
   }

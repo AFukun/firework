@@ -1,43 +1,69 @@
 let particles = [];
+let fireworkCount = 0;
 let camera;
 let images = [];
 let skybox;
 
-let whistle;
 let boomSound;
 let backgroundSound;
 
 function preload() {
   backgroundSound = loadSound("assets/whistle.mp3");
   boomSound = loadSound("assets/boom.mp3");
-  images.push(loadImage('assets/skybox/back.jpg'));
-  images.push(loadImage('assets/floor6_d.png'));
-  images.push(loadImage('assets/skybox/front.jpg'));
-  images.push(loadImage('assets/skybox/left.jpg'));
-  images.push(loadImage('assets/skybox/right.jpg'));
-  images.push(loadImage('assets/skybox/top.jpg'));
+  images.push(loadImage("assets/skybox/posz.jpg"));
+  images.push(loadImage("assets/skybox/negz.jpg"));
+  images.push(loadImage("assets/skybox/negx.jpg"));
+  images.push(loadImage("assets/skybox/posx.jpg"));
+  images.push(loadImage("assets/skybox/posy.jpg"));
+  images.push(loadImage("assets/skybox/negy.jpg"));
 }
 
 function setup() {
   createCanvas(1280, 720, WEBGL);
-  startStop();
+  createButtons();
   colorMode(HSB);
   angleMode(DEGREES);
   background(0);
   noStroke();
-  camera = new Camera(50, -100, 600);
+
+  camera = new Camera(-172, -218, 608, -156, -427, 22, 0, 1, 0);
   skybox = new skyBox(images, width);
-  drawingContext.shadowBlur = 10;
 }
 
 function draw() {
-  colorMode(HSB);
   background(0);
+  lightFalloff(1, 0.005, 0);
 
   camera.update();
+  updateParticles();
+  skybox.draw();
+}
 
-  if (random(1000) < 15) {
+function createButtons() {
+  let div = createDiv();
+  let button = createButton("start");
+  let button2 = createButton("stop");
+
+  button.parent(div);
+  button2.parent(div);
+  div.center("horizontal");
+
+  // noLoop();
+
+  button.mousePressed(function () {
+    loop();
+    backgroundSound.loop();
+  });
+  button2.mousePressed(function () {
+    noLoop();
+    backgroundSound.stop();
+  });
+}
+
+function updateParticles() {
+  if (random(1000) < 15 && fireworkCount < maxFireworkCount) {
     particles.push(new Firework());
+    fireworkCount++;
   }
 
   for (let i = 0; i < particles.length; i++) {
@@ -48,33 +74,11 @@ function draw() {
       if (newParticles.length != 0) {
         particles.push(...newParticles);
         boomSound.play();
+        fireworkCount--;
       }
       particles.splice(i, 1);
     }
   }
-  ambientLight(50);
-  skybox.draw();
-}
-
-function startStop() {
-  let div = createDiv();
-  let button = createButton("start");
-  let button2 = createButton("stop");
-
-  button.parent(div);
-  button2.parent(div);
-  div.center("horizontal");
-
-  noLoop();
-
-  button.mousePressed(function () {
-    loop();
-    // backgroundSound.loop();
-  });
-  button2.mousePressed(function () {
-    noLoop();
-    // backgroundSound.stop();
-  });
 }
 
 function mouseWheel(event) {
