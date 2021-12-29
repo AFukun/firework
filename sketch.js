@@ -9,6 +9,7 @@ function preload() {
   images.push(loadImage("assets/skybox/left.jpg"));
   images.push(loadImage("assets/skybox/right.jpg"));
   images.push(loadImage("assets/skybox/top.jpg"));
+  images.push(loadImage("assets/floor6_n.png"));
 }
 
 function setup() {
@@ -27,6 +28,12 @@ function draw() {
   background(0);
 
   camera.update();
+
+  push();
+  translate(0, -200, 0);
+  texture(images[6]);
+  box(200);
+  pop();
 
   ambientLight(100);
   skybox.draw();
