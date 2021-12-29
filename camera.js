@@ -1,4 +1,4 @@
-const camSpeed = 2;
+const camSpeed = 10;
 
 class Camera {
   constructor(x, y, z, cX, cY, cZ, uX, uY, uZ) {

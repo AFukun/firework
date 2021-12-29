@@ -3,7 +3,6 @@ let fireworkCount = 0;
 let camera;
 let images = [];
 let skybox;
-
 let boomSound;
 let backgroundSound;
 
@@ -21,18 +20,18 @@ function preload() {
 function setup() {
   createCanvas(1280, 720, WEBGL);
   createButtons();
-  colorMode(HSB);
-  angleMode(DEGREES);
-  background(0);
-  noStroke();
 
-  camera = new Camera(-172, -218, 608, -156, -427, 22, 0, 1, 0);
-  skybox = new skyBox(images, width);
+  colorMode(HSB);
+  background(0);
+  angleMode(DEGREES);
+  noStroke();
+  camera = new Camera(15, -325, 690, -23, -508, 194, 0, 1, 0);
+  skybox = new skyBox(images);
 }
 
 function draw() {
   background(0);
-  lightFalloff(1, 0.005, 0);
+  lightFalloff(0.8, 0.01, 0);
 
   camera.update();
   updateParticles();
@@ -48,7 +47,7 @@ function createButtons() {
   button2.parent(div);
   div.center("horizontal");
 
-  // noLoop();
+  noLoop();
 
   button.mousePressed(function () {
     loop();

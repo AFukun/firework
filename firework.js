@@ -11,7 +11,7 @@ class Firework extends Particle {
     super(
       fireworkWeight,
       new p5.Vector(random(-500, 500), 0, random(-100, 100)),
-      random(360),
+      random(180),
       new p5.Vector(0, fireworkSpeed, 0)
     );
     this.lifespan = 32767;

@@ -1,7 +1,6 @@
 class skyBox {
-  constructor(images, size) {
+  constructor(images) {
     this.images = images;
-    this.size = size;
   }
 
   draw() {
@@ -12,7 +11,6 @@ class skyBox {
     textureWrap(MIRROR, MIRROR);
     push();
     translate(-w / 2, h, -w / 2);
-
     // back
     beginShape();
     texture(this.images[0]);

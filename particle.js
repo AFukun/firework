@@ -30,7 +30,7 @@ class Particle {
   }
 
   show() {
-    if (this.lifespan > 100) {
+    if (this.lifespan > 200) {
       pointLight(
         this.color,
         255,
