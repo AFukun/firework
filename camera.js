@@ -8,7 +8,7 @@ class Camera {
   }
 
   update() {
-    perspective(this.fov, width/height, 0.1, 5000);
+    perspective(this.fov, width / height, 0.1, 5000);
     // Drag mouse to change the view angle
     orbitControl();
     if (keyIsDown(65)) {
