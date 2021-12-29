@@ -1,19 +1,15 @@
-class skyBox
-{
-  constructor(images, size)
-  {
+class skyBox {
+  constructor(images, size) {
     this.images = images;
     this.size = size;
   }
 
-  draw()
-  {
-    let h = width * 7 / 16;
+  draw() {
+    let h = (width * 7) / 16;
     textureMode(NORMAL);
     textureWrap(MIRROR, MIRROR);
     push();
     translate(-width / 2, h, -width / 2);
-    specularMaterial(10);
     // back
     beginShape();
     texture(this.images[0]);

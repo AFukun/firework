@@ -1,18 +1,18 @@
-let particles = [];
 let camera;
 let images = [];
 let skybox;
 
+function preload() {
+  images.push(loadImage("assets/skybox/back.jpg"));
+  images.push(loadImage("assets/floor6_d.png"));
+  images.push(loadImage("assets/skybox/front.jpg"));
+  images.push(loadImage("assets/skybox/left.jpg"));
+  images.push(loadImage("assets/skybox/right.jpg"));
+  images.push(loadImage("assets/skybox/top.jpg"));
+}
 
 function setup() {
-  images.push(loadImage('assets/skybox/back.jpg'));
-  images.push(loadImage('assets/floor6_d.png'));
-  images.push(loadImage('assets/skybox/front.jpg'));
-  images.push(loadImage('assets/skybox/left.jpg'));
-  images.push(loadImage('assets/skybox/right.jpg'));
-  images.push(loadImage('assets/skybox/top.jpg'));
   createCanvas(1280, 720, WEBGL);
-  startStop();
   colorMode(HSB);
   angleMode(DEGREES);
   background(0);
@@ -28,35 +28,8 @@ function draw() {
 
   camera.update();
 
-  if (random(1000) < 15) {
-    particles.push(new Firework());
-  }
-
-  for (let i = 0; i < particles.length; i++) {
-    particles[i].update();
-    particles[i].show();
-    if (particles[i].done()) {
-      particles.push(...particles[i].explosion());
-      particles.splice(i, 1);
-    }
-  }
-  ambientLight(50);
+  ambientLight(100);
   skybox.draw();
-}
-
-function startStop() {
-  let div = createDiv();
-  let button = createButton("start");
-  let button2 = createButton("stop");
-
-  button.parent(div);
-  button2.parent(div);
-  div.center("horizontal");
-
-  // noLoop();
-
-  button.mousePressed(loop);
-  button2.mousePressed(noLoop);
 }
 
 function mouseWheel(event) {
