@@ -56,14 +56,13 @@ function doBlur() {
   blurH.setUniform("tex0", img);
   blurH.setUniform("texelSize", [1.0 / width, 1.0 / height]);
   blurH.setUniform("direction", [1.0, 0.0]);
-
   pass1.rect(0, 0, width, height);
 
   blurV.setUniform("tex0", pass1);
   blurV.setUniform("texelSize", [1.0 / width, 1.0 / height]);
   blurV.setUniform("direction", [0.0, 1.0]);
-
   pass2.rect(0, 0, width, height);
+
   background(0);
   image(pass2, 0, 0, width, height);
 }
@@ -71,7 +70,6 @@ function doBlur() {
 function doBloom() {
   bloom.setUniform("tex0", img);
   bloom.setUniform("tex1", pass2);
-
   bloomPass.rect(0, 0, width, height);
 
   background(0);
@@ -81,7 +79,6 @@ function doBloom() {
 function doBlend() {
   blend.setUniform("tex0", img);
   blend.setUniform("tex1", pass2);
-
   blendPass.rect(0, 0, width, height);
 
   background(0);
@@ -104,14 +101,22 @@ function createButtons() {
 
   button0.mousePressed(function () {
     state = 0;
+    loop();
+    noLoop();
   });
   button1.mousePressed(function () {
     state = 1;
+    loop();
+    noLoop();
   });
   button2.mousePressed(function () {
     state = 2;
+    loop();
+    noLoop();
   });
   button3.mousePressed(function () {
     state = 3;
+    loop();
+    noLoop();
   });
 }
