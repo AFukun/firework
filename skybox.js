@@ -7,8 +7,6 @@ class skyBox {
     let w = 2048;
     let h = (w * 6) / 16;
     ambientLight(60);
-    textureMode(NORMAL);
-    textureWrap(MIRROR, MIRROR);
     push();
     translate(
       -w / 2 + camera.cam.eyeX,

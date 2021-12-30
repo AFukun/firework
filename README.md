@@ -2,7 +2,7 @@
 
 ## Local Test
 
-Just open [index.html](./index.html) in your browser.
+set up localserver on project directory and open it.
 
 ## Development
 

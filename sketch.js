@@ -24,7 +24,10 @@ function setup() {
   colorMode(HSB);
   background(0);
   angleMode(DEGREES);
+  textureMode(NORMAL);
+  textureWrap(MIRROR, MIRROR);
   noStroke();
+
   camera = new Camera(15, -325, 690, -23, -508, 194, 0, 1, 0);
   skybox = new skyBox(images);
 }
