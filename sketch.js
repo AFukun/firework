@@ -36,7 +36,12 @@ function draw() {
   colorMode(HSB);
   background(0);
 
-  stroke(128, 255, 255);
+  colorMode(RGB, 255, 255, 255, 1);
+  if (state == 3) {
+    stroke(0, 255, 0, 0.9);
+  } else {
+    stroke(0, 255, 0);
+  }
   strokeWeight(300);
   point(width / 2, height / 2);
 
