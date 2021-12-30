@@ -4,7 +4,7 @@ const fireworkSpeed = 40;
 const explosionAmount = 100;
 const fireworkWeight = 10;
 const particleWeight = 4;
-const maxFireworkCount = 10;
+const maxFireworkCount = 5;
 
 class Firework extends Particle {
   constructor() {

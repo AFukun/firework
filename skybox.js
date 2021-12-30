@@ -1,18 +1,18 @@
+let w = 2048 * 3;
+let h = (w * 7) / 16;
+
 class skyBox {
   constructor(images) {
     this.images = images;
   }
 
-  draw() {
-    let w = 2048;
-    let h = (w * 6) / 16;
+  draw_sky() {
     ambientLight(60);
-    textureMode(NORMAL);
-    textureWrap(MIRROR, MIRROR);
+    noLights();
     push();
     translate(
       -w / 2 + camera.cam.eyeX,
-      h + h / 4 + camera.cam.eyeY,
+      h ,  // + camera.cam.eyeY,
       -w / 2 + camera.cam.eyeZ
     );
     // back
@@ -62,6 +62,25 @@ class skyBox {
     vertex(w, -h, 0, 1, 0);
     vertex(w, -h, w, 1, 1);
     vertex(0, -h, w, 0, 1);
+    endShape();
+    pop();
+  }
+
+  draw_ground(){
+    ambientLight(60);
+    push();
+    translate(
+      -w / 2,// + camera.cam.eyeX,
+      h ,// + camera.cam.eyeY,
+      -w / 2,// + camera.cam.eyeZ
+    );
+    // bottom
+    beginShape();
+    texture(this.images[5]);
+    vertex(0, -h, 0, 0, 0);
+    vertex(w, -h, 0, 10, 0);
+    vertex(w, -h, w, 10, 10);
+    vertex(0, -h, w, 0, 10);
     endShape();
     pop();
   }

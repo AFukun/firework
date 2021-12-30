@@ -24,6 +24,8 @@ function setup() {
   colorMode(HSB);
   background(0);
   angleMode(DEGREES);
+  textureMode(NORMAL);
+  textureWrap(MIRROR, MIRROR);
   noStroke();
   camera = new Camera(15, -325, 690, -23, -508, 194, 0, 1, 0);
   skybox = new skyBox(images);
@@ -31,11 +33,12 @@ function setup() {
 
 function draw() {
   background(0);
-  lightFalloff(0.8, 0.01, 0);
+  lightFalloff(1, 0.01, 0.0001);
 
   camera.update();
+  skybox.draw_sky();
   updateParticles();
-  skybox.draw();
+  skybox.draw_ground();
 }
 
 function createButtons() {
